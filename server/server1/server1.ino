@@ -1,5 +1,8 @@
 #include <esp_now.h>
 #include <WiFi.h>
+#include "SRead.h"
+
+SRead Sread0(115200);
 
 uint8_t carAddress[] = {0x10, 0x06, 0x1C, 0x41, 0x9F, 0x18};
 typedef struct struct_message {
@@ -33,7 +36,10 @@ void setup() {
 }
  
 void loop() {
-  myData.a = random(1,20);
-  esp_now_send(carAddress, (uint8_t *) &myData, sizeof(myData));
-  delay(2000);
+  if(Serial.available() != 0)
+  {
+    myData.a = Sread0.IntRead();
+    esp_now_send(carAddress, (uint8_t *) &myData, sizeof(myData));
+  }
+  
 }
