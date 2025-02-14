@@ -2,7 +2,9 @@
 #include <WiFi.h>
 
 typedef struct struct_message {
-    int a;
+    int x_rec;
+    int y_rec;
+    int w_rec;
 } struct_message;
 
 struct_message myData;
@@ -10,7 +12,9 @@ struct_message myData;
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&myData, incomingData, sizeof(myData));
   Serial.print("Print: ");
-  Serial.println(myData.a);
+  Serial.println(myData.x_rec);
+  Serial.println(myData.y_rec);
+  Serial.println(myData.w_rec);
 }
 void setup() {
   Serial.begin(115200);
