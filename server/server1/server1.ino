@@ -34,12 +34,19 @@ void setup() {
     return;
   }
 }
- 
+String str;
+int read_numbear;
+String read_string;
 void loop() {
   if(Serial.available() != 0)
   {
-    myData.a = Sread0.IntRead();
-    esp_now_send(carAddress, (uint8_t *) &myData, sizeof(myData));
+    // myData.a = Sread0.StrRead();
+    str = Sread0.StrRead();
+    read_numbear = Sread0.IntInStr(str);
+    read_string = Sread0.StringInStr(str);
+    if (read_string=="x") Serial.println("YES");
+    else Serial.println("No");
+    //esp_now_send(carAddress, (uint8_t *) &myData, sizeof(myData));
   }
   
 }
