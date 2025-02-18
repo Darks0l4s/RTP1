@@ -9,7 +9,6 @@ typedef struct struct_message {
   int x;
   int y;
   int w;
-  int n;
 } struct_message;
 struct_message myData;
 esp_now_peer_info_t peerInfo;
@@ -88,13 +87,6 @@ void command()
     Serial.println(myData.w);
     if(!slow_mode)goto send_ESP_NOW;
   }
-  if (read_string=="n")
-  {
-    myData.n=read_numbear;
-    Serial.print("n=");
-    Serial.println(myData.n);
-    if(!slow_mode)goto send_ESP_NOW;
-  }
   if (read_string=="send")
   {
     send_ESP_NOW:
@@ -102,6 +94,5 @@ void command()
     myData.x=0;
     myData.y=0;
     myData.w=0;
-    myData.n=0;
   }
 }
