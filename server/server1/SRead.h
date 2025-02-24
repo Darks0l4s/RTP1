@@ -3,7 +3,7 @@
 class SRead {
   public:
     SRead(int speed);
-    String StrRead(), StringInStr(String _str);
+    String StrRead(), StringInStr(String _str), command_read(String _str);
     int IntRead(), IntInStr(String _str);
   private:
     String _str="", _stroka="",_NewStr="";

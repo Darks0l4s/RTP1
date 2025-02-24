@@ -1,3 +1,4 @@
+#include "WString.h"
 #include "SRead.h"
 
 SRead::SRead(int speed)
@@ -44,9 +45,12 @@ int SRead::IntInStr(String _str)
 {
   _minus=1;
   _numbear=0;
-  int i;
+  int i=0;
   _quantity=_str.length();
-  for (i=0; i<_quantity; i++)
+  while (_str[i]!='=' && i<_quantity) {
+  i++;
+  }
+  for (i=i; i<_quantity; i++)
   {
     if (_str[i]=='-') _minus*=-1;
     if (_str[i]>=48 && _str[i]<=57)
@@ -69,6 +73,21 @@ String SRead::StringInStr(String _str)
     _a=_str[i];
     if(_a>=65 && _a<=90) _a+=32;
     if(_a>=95 && _a<=122) _NewStr+=_a;
+  }
+  return _NewStr;
+}
+
+String SRead::command_read(String _str)
+{
+  _NewStr="";
+  int i;
+  _quantity=_str.length();
+  for (i=0; i<_quantity; i++)
+  {
+    _a=_str[i];
+    if(_a>=65 && _a<=90) _a+=32;
+    if(_a==61) break; 
+    if(_a!=' ')_NewStr+=_a;
   }
   return _NewStr;
 }
