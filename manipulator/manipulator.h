@@ -8,6 +8,5 @@ class manipulator
 
   private:
   int _step_pin, _dir_pin, _step360, _time;
-  long long _i;
-  long long _step1=0, _alpha;
+  float _step1=0, _alpha;
 };

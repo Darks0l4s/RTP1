@@ -150,18 +150,23 @@ void command()
       Serial.println(read_numbear);
       if(!slow_mode)goto send_ESP_NOW2;
     }
-    if (read_string=="ms1")
+    if (read_string=="ms")
     {
       myData2.serv1=read_numbear;
-      Serial.print("ManipulatorServo1=");
+      Serial.print("ManipulatorServo=");
       Serial.println(read_numbear);
       if(!slow_mode)goto send_ESP_NOW2;
     }
-    if (read_string=="ms2")
+    if (read_string=="mon")
     {
-      myData2.serv2=read_numbear;
-      Serial.print("ManipulatorServo2=");
-      Serial.println(read_numbear);
+      myData2.serv2=2;
+      Serial.println("Servo ON");
+      if(!slow_mode)goto send_ESP_NOW2;
+    }
+    if (read_string=="moff")
+    {
+      myData2.serv2=1;
+      Serial.print("Servo OFF");
       if(!slow_mode)goto send_ESP_NOW2;
     }
     if (read_string=="msend")
