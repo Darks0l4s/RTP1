@@ -11,6 +11,7 @@ typedef struct struct_message1 {
   int x;
   int y;
   int w;
+  int scen;
 } struct_message1;
 struct_message1 myData1;
 
@@ -21,6 +22,7 @@ typedef struct struct_message2 {
   int h2;
   int serv1;
   int serv2;
+  int scen;
 } struct_message2;
 struct_message2 myData2;
 
@@ -119,6 +121,14 @@ void command()
       myData1.y=0;
       myData1.w=0;
     }
+    if (read_string=="test")
+    {
+      myData1.scen=read_numbear;
+      Serial.print("Scene=");
+      Serial.println(myData1.scen);
+      esp_now_send(carAddress, (uint8_t *) &myData1, sizeof(myData1));
+      myData1.scen=0;
+    }
   }
   //Манипулятор
   {
@@ -179,6 +189,14 @@ void command()
       myData2.h2=0;
       myData2.serv1=0;
       myData2.serv2=0;
+    }
+    if (read_string=="mtest")
+    {
+      myData2.scen=read_numbear;
+      Serial.print("Scene=");
+      Serial.println(myData2.scen);
+      esp_now_send(maniAddress, (uint8_t *) &myData2, sizeof(myData2));
+      myData2.scen=0;
     }
   }
 }
