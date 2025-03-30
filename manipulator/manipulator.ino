@@ -14,6 +14,8 @@
 #define DIR_PIN3 33  // Пин для DIR
 #define STEP_PIN4 23   // Пин для STEP
 #define DIR_PIN4 22  // Пин для DIR
+#define sens 35
+
 manipulator manipulator1(STEP_PIN1, DIR_PIN1, 360, 100);
 manipulator manipulator2(STEP_PIN2, DIR_PIN2, 6400, 2000);
 manipulator manipulator3(STEP_PIN4, DIR_PIN4, 6400, 2000);
@@ -72,6 +74,7 @@ void setup() {
   servo2.attach(servoPin2);
   servo1.write(rot1);
   servo2.write(rot2);
+  pinMode(sens, INPUT);
 }
 
 void loop() {
@@ -93,8 +96,8 @@ void loop() {
     f1=a1_now;
     f2=a2_now;
     send=false;
-    if(serv2==2) servo2.write(90);
-    if(serv2==1) servo2.write(30);
+    if(serv2==2) capture(true);
+    if(serv2==1) capture(false);
     rot1+=serv1;
     servo1.write(rot1);
     if (scena!=0) circus();
@@ -116,7 +119,7 @@ void circus()
     f2=a2_now;
     manipulator1.stepMotor(-(h0-5)*2000);
     manipulator4.stepMotor(10000);
-    servo2.write(90);
+    capture(true);
     manipulator4.stepMotor(-10000);
     manipulator1.stepMotor((h0-5)*2000);
     y=-10;
@@ -127,7 +130,7 @@ void circus()
     f1=a1_now;
     f2=a2_now;
     manipulator4.stepMotor(5000);
-    servo2.write(30);
+    capture(false);
     manipulator4.stepMotor(1000);
     h0-=3;
   }
@@ -143,7 +146,7 @@ void circus()
     f2=a2_now;
     manipulator4.stepMotor((18-h0)*2000);
     manipulator1.stepMotor((15-h0)*2000);
-    servo2.write(90);
+    capture(true);
     manipulator4.stepMotor(-6000);
     h0+=3;
     x=17; y=20;
@@ -155,7 +158,7 @@ void circus()
     f2=a2_now;
     manipulator1.stepMotor(-(h0-8)*2000);
     manipulator4.stepMotor(16000);
-    servo2.write(30);
+    capture(false);
     manipulator4.stepMotor(-16000);
     manipulator1.stepMotor((h0-8)*2000);
     y=-10;
@@ -166,7 +169,7 @@ void circus()
     f1=a1_now;
     f2=a2_now;
     manipulator4.stepMotor(5000);
-    servo2.write(30);
+    capture(false);
     manipulator4.stepMotor(1000);
     h0-=3;
   }
@@ -233,4 +236,28 @@ void math2()
   Serial.print(f1-a1_now);
   Serial.print(" ");
   Serial.print(f2-a2_now);
+}
+
+void capture(bool on)
+{
+  int i_d;
+  if (on)
+  {
+    for (i_d=rot2;i_d<90;i_d++)
+    {
+      servo2.write(i_d);
+      if(digitalRead(sens)) break;
+      delay(5);
+    }
+
+  }
+  else
+  {
+    for (i_d=rot2;i_d>30;i_d--)
+    {
+      servo2.write(i_d);
+      delay(5);
+    }
+  }
+  rot2=i_d;
 }
